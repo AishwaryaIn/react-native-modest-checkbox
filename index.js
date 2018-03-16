@@ -6,17 +6,14 @@ class Checkbox extends PureComponent {
     state = {
         checked: false
     }
+    componentWillReceiveProps(nextProps){
+        this.setState({ checked: nextProps.checked })
+    }
     componentDidMount() {
         this.setState({ checked: this.props.checked })
     }
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.checked != this.state.checked){
-            this.setState({ checked: this.props.checked })
-        }
-    }
     render() {
-      
-        // const { checked } = this.state
+        const { checked } = this.state
         const {
             labelBefore,
             containerStyle,
@@ -28,9 +25,7 @@ class Checkbox extends PureComponent {
             labelStyle,
             numberOfLabelLines,
             label,
-            checked
         } = this.props
-
         return (
             <TouchableOpacity
                 style={[styles.container, containerStyle]}
@@ -47,13 +42,13 @@ class Checkbox extends PureComponent {
                 {checkedComponent && uncheckedComponent ? checked ? (
                     checkedComponent
                 ) : (
-                        uncheckedComponent
-                    ) : (
-                        <Image
-                            style={[styles.checkbox, checkboxStyle]}
-                            source={checked ? checkedImage : uncheckedImage}
-                        />
-                    )}
+                    uncheckedComponent
+                ) : (
+                    <Image
+                        style={[styles.checkbox, checkboxStyle]}
+                        source={checked ? checkedImage : uncheckedImage}
+                    />
+                )}
 
                 {!labelBefore && (
                     <Label
@@ -67,7 +62,6 @@ class Checkbox extends PureComponent {
     }
 
     handleToggleChecked = () => {
-        this.setState({ checked: this.props.checked })
         const { label } = this.props
         const checked = !this.state.checked
 
